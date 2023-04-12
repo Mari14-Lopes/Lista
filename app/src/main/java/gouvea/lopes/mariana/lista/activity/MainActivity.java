@@ -1,6 +1,9 @@
 package gouvea.lopes.mariana.lista.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,12 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gouvea.lopes.mariana.lista.R;
+import gouvea.lopes.mariana.lista.adapter.MyAdapter;
 import gouvea.lopes.mariana.lista.model.MyItem;
 
 public class MainActivity extends AppCompatActivity {
     //criando novo atributo
     static int NEW_ITEM_REQUEST = 1;
     List<MyItem> itens = new ArrayList<>();
+    MyAdapter myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +45,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        @Override
-        protected  void onCreate(Bundle savedInstanceState){
+        RecyclerView rvItens = findViewById(R.id.rvItens);
 
-        }
+        myAdapter = new MyAdapter(this,itens);
+        rvItens.setAdapter(myAdapter);
+
+        rvItens.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        rvItens.setLayoutManager(layoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(), DividerItemDecoration.VERTICAL);
+        rvItens.addItemDecoration(dividerItemDecoration);
     }
 
     @Override
@@ -57,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 myItem.photo = data.getData();
 
                 itens.add(myItem);
+                myAdapter.notifyItemInserted(itens.size()-1);
                 }
             }
         }
