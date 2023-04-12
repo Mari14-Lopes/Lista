@@ -1,5 +1,7 @@
 package gouvea.lopes.mariana.lista.activity;
 
+import static android.os.Build.VERSION_CODES.R;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,16 +47,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // obtemos o RecycleView
         RecyclerView rvItens = findViewById(R.id.rvItens);
 
+        //criado o MyAdapter e ele é setado no RecycleView
         myAdapter = new MyAdapter(this,itens);
         rvItens.setAdapter(myAdapter);
 
+        //setHasFixedSize indica ao RecycleView que não há variação de tamanho entre os itens da lista
         rvItens.setHasFixedSize(true);
 
+        //criamos um gerenciador de layout do tipo linear e o setamos no RecycleView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvItens.setLayoutManager(layoutManager);
 
+        //criamos um decorador para a lista, que consiste apenas em uma linha separando cada
+        //item e o setamos no RecycleView
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(), DividerItemDecoration.VERTICAL);
         rvItens.addItemDecoration(dividerItemDecoration);
     }
@@ -62,13 +70,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //verificamos se as condições de retorno foram cumpridas
         if(requestCode == NEW_ITEM_REQUEST) {
             if(resultCode == Activity.RESULT_OK) {
+                //obtemos os dados retornados por NewItemActivity e os guardamos dentro de myItem
                 MyItem myItem = new MyItem();
                 myItem.title = data.getStringExtra("title");
                 myItem.description = data.getStringExtra("description");
                 myItem.photo = data.getData();
 
+                //adicionamos o item a uma lista de itens
                 itens.add(myItem);
                 myAdapter.notifyItemInserted(itens.size()-1);
                 }
