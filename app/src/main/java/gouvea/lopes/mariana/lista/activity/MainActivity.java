@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //adicionamos o item a uma lista de itens
                 itens.add(myItem);
+                //notificando o  adapter para que o novo item seja mostrado no RecycleView
                 myAdapter.notifyItemInserted(itens.size()-1);
                 }
             }
