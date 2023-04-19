@@ -32,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="Título"
         android:inputType="textPersonName"
-        android:text="Título"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCI" />
 
@@ -46,8 +47,8 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:gravity="top"
+        android:hint="Descrição"
         android:inputType="textPersonName"
-        android:text="Descrição"
         app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
