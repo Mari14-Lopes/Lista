@@ -7,17 +7,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import gouvea.lopes.mariana.lista.R;
 import gouvea.lopes.mariana.lista.adapter.MyAdapter;
 import gouvea.lopes.mariana.lista.model.MyItem;
+import gouvea.lopes.mariana.lista.model.Util;
 
 public class MainActivity extends AppCompatActivity {
     //criando novo atributo
@@ -75,7 +79,16 @@ public class MainActivity extends AppCompatActivity {
                 MyItem myItem = new MyItem();
                 myItem.title = data.getStringExtra("title");
                 myItem.description = data.getStringExtra("description");
-                myItem.photo = data.getData();
+                Uri selectedPhotoURI = data.getData();
+
+                try{
+                    //Essa função carrega a imagem e a guarda dentro de um Bitmap, criando assim uma copia da imagem
+                    Bitmap photo = Util.getBitmap(MainActivity.this, selectedPhotoURI, 100, 100);
+                    //Guardando o Bitmap da imagem dentro de um objeto do tipo MyItem
+                    myItem.photo = photo;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
                 //adicionamos o item a uma lista de itens
                 itens.add(myItem);
