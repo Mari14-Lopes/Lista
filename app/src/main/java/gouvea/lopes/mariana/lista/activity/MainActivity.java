@@ -1,6 +1,7 @@
 package gouvea.lopes.mariana.lista.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +21,13 @@ import java.util.List;
 
 import gouvea.lopes.mariana.lista.R;
 import gouvea.lopes.mariana.lista.adapter.MyAdapter;
+import gouvea.lopes.mariana.lista.model.MainActivityViewModel;
 import gouvea.lopes.mariana.lista.model.MyItem;
 import gouvea.lopes.mariana.lista.model.Util;
 
 public class MainActivity extends AppCompatActivity {
     //criando novo atributo
     static int NEW_ITEM_REQUEST = 1;
-    List<MyItem> itens = new ArrayList<>();
     MyAdapter myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
         // obtemos o RecycleView
         RecyclerView rvItens = findViewById(R.id.rvItens);
+
+        //ViewModel referente a MainActivity é obtido
+        MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        //Lista de itens é obtida a partir do ViewModel e repassada para o Adapter
+        List<MyItem> itens = vm.getItens();
 
         //criado o MyAdapter e ele é setado no RecycleView
         myAdapter = new MyAdapter(this,itens);
@@ -89,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+
+                //ViewModel referente a MainActivity é obtido
+                MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+                //Lista de itens é obtida a partir do ViewModel e repassada para o Adapter
+                List<MyItem> itens  = vm.getItens();
 
                 //adicionamos o item a uma lista de itens
                 itens.add(myItem);
